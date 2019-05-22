@@ -16,9 +16,18 @@ namespace BlockChainCodeBlog.Tests
         {
             var chain = new Chain();
             chain.Add("Code Blog", "admin");
-            Assert.AreEqual(2, chain.Blocks.Count);
             Assert.AreEqual("Code Blog", chain.Last.Data);
             Assert.AreEqual("admin", chain.Last.User);
+        }
+
+        [TestMethod()]
+        public void CheckTest()
+        {
+            var chain = new Chain();
+            chain.Add("hello world", "admin");
+            chain.Add("code blog", "kirill");
+
+            Assert.IsTrue(chain.Check());
         }
     }
 }

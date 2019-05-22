@@ -76,7 +76,7 @@ namespace BlockChainCodeBlog
         private string GetData()
         {
             string result = "";
-            result += Id.ToString();
+
             result += Data.ToString();
             result += Created.ToString("dd.MM.yyyy HH:mm:ss.fff");
             result += PrevHash;

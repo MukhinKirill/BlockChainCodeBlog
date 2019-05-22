@@ -17,24 +17,19 @@ namespace BlockChainCodeBlog
             InitializeComponent();
         }
 
-        private Chain _chain = new Chain();
+        private Chain _chain;
         private void AddBtn_Click(object sender, EventArgs e)
         {
             listBox.Items.Clear();
-            _chain.Add(textBox.Text, "admin");
+            _chain.Add(textBox.Text, "User");
             textBox.Clear();
-            foreach (var block in _chain.Blocks)
-            {
-                listBox.Items.Add(block);
-            }
+            listBox.Items.AddRange(_chain.Blocks.ToArray());
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            foreach (var block in _chain.Blocks)
-            {
-                listBox.Items.Add(block);
-            }
+            _chain = new Chain();
+            listBox.Items.AddRange(_chain.Blocks.ToArray());
         }
     }
 }
