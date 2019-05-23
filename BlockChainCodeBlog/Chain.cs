@@ -84,5 +84,9 @@ namespace BlockChainCodeBlog
 
             return result;
         }
+        private void Sync()
+        {
+
+        }
     }
 }

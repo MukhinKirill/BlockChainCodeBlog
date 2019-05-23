@@ -1,34 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.IO;
 
 namespace BlockChainCodeBlog
 {
     /// <summary>
     /// Block of Data, smallest bit of data for work
     /// </summary>
+    [DataContract]
     public class Block
     {
         public int Id { get; private set; }
+        [DataMember]
         public string Data { get; private set; }
         /// <summary>
         /// the creation date of the block
         /// </summary>
+        [DataMember]
         public DateTime Created { get; private set; }
         /// <summary>
         /// current's block hash
         /// </summary>
+        [DataMember]
         public string Hash { get; private set; }
         /// <summary>
         /// Previously block's hash
         /// </summary>
+        [DataMember]
         public string PrevHash { get; private set; }
         /// <summary>
         /// Name of user
         /// </summary>
+        [DataMember]
         public string User { get; private set; }
         /// <summary>
         /// Constructor of genesis block
@@ -104,6 +110,27 @@ namespace BlockChainCodeBlog
         public override string ToString()
         {
             return Data;
+        }
+        public string Serialize()
+        {
+            var jsonSerializer = new DataContractJsonSerializer(typeof(Block));
+
+            using (var ms = new MemoryStream())
+            {
+                jsonSerializer.WriteObject(ms, this);
+                return Encoding.UTF8.GetString(ms.ToArray());
+            }
+        }
+
+        public static Block Deserialize(string json)
+        {
+            var jsonSerializer = new DataContractJsonSerializer(typeof(Block));
+
+            using (var ms = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            {
+                var result = jsonSerializer.ReadObject(ms);
+                return result as Block;
+            }
         }
     }
 }
